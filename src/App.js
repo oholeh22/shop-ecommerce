@@ -110,7 +110,8 @@ class App extends Component {
           price: "69.99",
         },
       ],
-      ShowFullItem: false
+      ShowFullItem: false,
+      fullItem: {}
     };
     this.state.currentItems = this.state.items;
     this.addToOrder = this.addToOrder.bind(this);
@@ -126,13 +127,14 @@ class App extends Component {
         <Categories chooseCategory={this.chooseCategory} />
         <Items onShowItem={this.onShowItem} items={this.state.currentItems} onAdd={this.addToOrder} />
 
-        {this.state.showFullItem && <ShowFullItem />}
+        {this.state.showFullItem && <ShowFullItem onAdd={this.addToOrder} onShowItem={this.onShowItem} item={this.state.fullItem}/>}
         <Footer />
       </div>
     );
   }
 
-  onShowItem() {
+  onShowItem(item) {
+    this.setState({fullItem: item})
     this.setState({showFullItem: !this.state.showFullItem})
   }
 
