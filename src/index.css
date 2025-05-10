@@ -258,7 +258,6 @@ footer {
   margin-top: 100px;
 }
 
-
 @media (max-width: 1024px) {
   .wrapper {
     width: 90%;
@@ -280,6 +279,12 @@ footer {
   }
   header ul.nav li {
     margin: 0 15px 10px;
+  }
+  header .shop-cart {
+    width: 350px;
+    top: 120px;
+    right: 10px;
+    padding: 15px;
   }
   header .shop-cart-button {
     float: none;
@@ -341,6 +346,14 @@ footer {
   header ul.nav li {
     display: block;
     margin: 8px 0;
+  }
+  header .shop-cart {
+    top: 200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    max-width: 400px;
+    padding: 15px;
   }
   header .shop-cart-button {
     margin: 10px auto;
