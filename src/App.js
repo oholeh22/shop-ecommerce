@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Items from "./components/Items";
 import Footer from "./components/Footer";
 import Categories from "./components/Categories";
+import ShowFullItem from "./components/ShowFullItem";
 
 class App extends Component {
   constructor(props) {
@@ -109,11 +110,13 @@ class App extends Component {
           price: "69.99",
         },
       ],
+      ShowFullItem: false
     };
     this.state.currentItems = this.state.items;
     this.addToOrder = this.addToOrder.bind(this);
     this.deleteOrder = this.deleteOrder.bind(this);
     this.chooseCategory = this.chooseCategory.bind(this);
+    this.onShowItem = this.onShowItem.bind(this);
   }
 
   render() {
@@ -121,10 +124,16 @@ class App extends Component {
       <div className="wrapper">
         <Header orders={this.state.orders} onDelete={this.deleteOrder} />
         <Categories chooseCategory={this.chooseCategory} />
-        <Items items={this.state.currentItems} onAdd={this.addToOrder} />
+        <Items onShowItem={this.onShowItem} items={this.state.currentItems} onAdd={this.addToOrder} />
+
+        {this.state.showFullItem && <ShowFullItem />}
         <Footer />
       </div>
     );
+  }
+
+  onShowItem() {
+    this.setState({showFullItem: !this.state.showFullItem})
   }
 
   chooseCategory(category) {
