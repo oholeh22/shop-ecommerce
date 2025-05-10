@@ -80,6 +80,7 @@ header .shop-cart .item img {
   width: 70px;
   float: left;
   margin-right: 20px;
+  aspect-ratio: 1 / 1;
 }
 
 header .shop-cart .item h2 {
