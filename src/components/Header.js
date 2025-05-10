@@ -1,30 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { FaCartShopping } from "react-icons/fa6";
 import Order from "./Order";
 
-const showOrders = (props) => {
-  let summa = 0
-  props.orders.forEach(el => summa += Number.parseFloat(el.price))
-  return (
-    <div>
-      {props.orders.map((el) => (
-        <Order onDelete={props.onDelete} key={el.id} item={el} />
-      ))}
-      <p className="summa">Сумма: {new Intl.NumberFormat().format(summa)}$</p>
-    </div>
+export default React.memo(function Header({ orders, onDelete }) {
+  const [cartOpen, setCartOpen] = useState(false);
+  const summa = useMemo(
+    () => orders.reduce((sum, { price }) => sum + parseFloat(price), 0),
+    [orders]
   );
-};
 
-const showNothing = () => {
-  return (
-    <div className="empty">
-      <h2>Товаров нет</h2>
-    </div>
-  )
-}
-
-export default function Header(props) {
-  let [cartOpen, setCartOpen] = useState(false);
   return (
     <header>
       <div>
@@ -35,17 +19,29 @@ export default function Header(props) {
           <li>Кабинет</li>
         </ul>
         <FaCartShopping
-          onClick={() => setCartOpen((cartOpen = !cartOpen))}
-          className={`shop-cart-button ${cartOpen && "active"}`}
+          onClick={() => setCartOpen(!cartOpen)}
+          className={`shop-cart-button${cartOpen ? " active" : ""}`}
         />
-
         {cartOpen && (
           <div className="shop-cart">
-            {props.orders.length > 0 ? showOrders(props) : showNothing()}
+            {orders.length > 0 ? (
+              <>
+                {orders.map(item => (
+                  <Order onDelete={onDelete} key={item.id} item={item} />
+                ))}
+                <p className="summa">
+                  Сумма: {new Intl.NumberFormat().format(summa)}$
+                </p>
+              </>
+            ) : (
+              <div className="empty">
+                <h2>Товаров нет</h2>
+              </div>
+            )}
           </div>
         )}
       </div>
-      <div className="presentation"></div>
+      <div className="presentation" />
     </header>
   );
-}
+});
